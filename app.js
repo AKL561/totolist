@@ -1,4 +1,10 @@
+app.get('/health', (req, res) => {
+  res.json({ ok: true });
+});
+module.exports = app;
+
 const express = require('express');
+app.get('/health', (_req, res) => res.json({ ok: true }));
 const bodyParser = require('body-parser');
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
@@ -333,15 +339,10 @@ app.delete('/todos/:id', (req, res) => {
       res.status(404).send("Todo not found");
   }
 });
-
-
-
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openapiSpecification));
 
-if (require.main === module) app.listen(3000, () => {
-    console.log('Server is running on http://localhost:3000');
-});
 
-// --- Vercel health & export ---
-app.get('/health', (req,res)=>res.json({ok:true}));
+app.get('/health', (_req, res) => {
+  res.status(200).json({ ok: true });
+});
 module.exports = app;
