@@ -338,6 +338,10 @@ app.delete('/todos/:id', (req, res) => {
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openapiSpecification));
 
-app.listen(3000, () => {
+if (require.main === module) app.listen(3000, () => {
     console.log('Server is running on http://localhost:3000');
 });
+
+// --- Vercel health & export ---
+app.get('/health', (req,res)=>res.json({ok:true}));
+module.exports = app;
